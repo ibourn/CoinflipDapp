@@ -79,8 +79,8 @@
 
   usage for a **local network** : | for **ropsten** usage :
   ------------------------------------|-----------------------------
-  download :[ganache](https://www.trufflesuite.com/ganache) | run :     'npm @truffle/hdwallet-provider'
-  in metamask specify a new port for ganache : 7545 |=>note the seed of your metamsk wallet in a file ".secret"
+  download :[ganache](https://www.trufflesuite.com/ganache) in metamask specify a new port for ganache : 7545 | run :     'npm @truffle/hdwallet-provider'
+  =>note the seed of your metamsk wallet in a file ".secret"
    | in the dapp directory
    |
   run :     'compil --all' | to deploy on ropsten

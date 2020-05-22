@@ -8,37 +8,30 @@
   The user bet, a random number is taken : odd, the bet is won, even, it's lost. The initial reward is 2 times the amount of the bet.
 
  ## Motivation
-  it's is one project as part of the **Ivan On Tech’s courses**. A wonderful place to learn about crypto and  blockchain development with a great community!
-  [Ivan on tech Academy](https://academy.ivanontech.com/)
-  you can follow his "good morning crypto" each and every morning at :
-  https://academy.ivanontech.com/live (or https://www.youtube.com/user/LiljeqvistIvan)
+  it's is one project as part of the [**Ivan On Tech Academy**](https://academy.ivanontech.com/)'s courses. A wonderful place to learn about crypto and  blockchain development with a great community!
+  you can follow Ivan and his ["good morning crypto"](https://academy.ivanontech.com/live) each and every morning.
 
   Thanks to __@ivan-liljeqvist__ and __@filipmartinsson__ to make this knowledge accessible and simple.
 
-  >I really enjoy following this course and developing a dapp. Looking for issues and additional >knowledge as part of the process. Certainly a little step but it's a first for me! Perhaps a >track for a future reconversion. However, much remains to be done :
-  * finish these courses with eth game developing, then eos and btc programming,
-  * learn, and validate with recognized certificates, web programming in order to be a full->stack dev.
-
+  >I really enjoy following this course and developing a dapp. Looking for issues and additional >knowledge as part of the process. Certainly a little step but it's a first for me! Perhaps a >track for a future reconversion. However, much remains to be done : finish these courses with eth game developing, then eos and btc programming / learn, and validate with recognized certificates, web programming in order to be a full->stack dev.
 
  ## Presentation
-  long video due to the waiting time for the transactions
-  [video](https://vimeo.com/421694810)
-
+  this is a long [video](https://vimeo.com/421694810) due to the waiting time for the transactions
 
  ## Goals of the project :
   * to develop an ethereum smart contract and deploy it on ropsten testnet.
   * to make use of an oracle.
   * to create the front-end to interact with the contract
 
-  the use of an oracle is relevant in this context to obtain a random number. Indeed, due to the consensus mechanism, one transaction validated can't have many different state in each nodes (the case where the random number is computed inside the contract in a transaction in each nodes). So make this random number be computed off-chain via an oracle allow to have a same state in each node : one transaction to query a random number, and one another with the final treatment (the same random number is part of the transaction across the network).
-
+  the use of an oracle is relevant in this context to obtain a random number. Indeed, due to the consensus mechanism, one transaction validated can't have many different states in each node (if the random number is computed inside the contract in each nodes). So make this random number be computed off-chain via an oracle allow to have a same state in each node : one transaction to query a random number, and one another with the final treatment (the same random number is part of the transaction across the network).
 
   >__improvement :__ to follow up the course about security, i make the contract upgradeable using a proxy pattern. The goal is to split data and logic. By making inherit the proxy from a storage contract storage we can make them persistent while allowing to modify the logic contract by providing its address to the proxy.   
 
   #### learning gained :
     * language
      * ethereum programming language : solidity
-     * approach of assembly code (low level language) for the delegate call allowing the proxy to use functions from logic contract with his context (scope) and his storage.
+     * approach of assembly code (low level language) for the delegate call allowing the proxy
+      to use functions from logic contract with his context (scope) and his storage.
      * management of oracle and events
 
     * tools and environment
@@ -52,39 +45,29 @@
    #### personal learning experience aside :
     * web programming language : html, css and the framework bootsrap4
     * front and back end language : javascript and the library jquery
-    * github : hosting for software development version control (i miss this point cause i created 2 repo instead of a branch)
-
+    * github : hosting for software development version control (i miss this point cause i created
+       2 repo instead of a branch)
 
  ## Getting Started
-
   first get a wallet and some fake eth :
   * install : [Metamask](https://metamask.io/) - your ethereum wallet
   * choose the ropsten network
   * get some testnet eth : https://faucet.metamask.io/
 
   ### For users
-  in the directory of the dapp open a console and run : 'python -m http.server'
+  in the directory of the dapp open a console and run : `python -m http.server`
   in your browser : http://127.0.0.1:8000/
 
   ### For development
-
   #### Prerequisites
-
   install : [nodejs](https://nodejs.org/en/)
-
-  via the powershell :
-  go in the dapp directory : cd C:\xxxx\CoinflipDapp (windows)
-
-  run :     npm install truffle -g
+  via the powershell go in the dapp directory : `cd C:\xxxx\CoinflipDapp (windows)`
+  run : `npm install truffle -g`
 
   usage for a **local network** : | for **ropsten** usage :
   ------------------------------------|-----------------------------
-  download :[ganache](https://www.trufflesuite.com/ganache) in metamask specify a new port for ganache : 7545 | run :     'npm @truffle/hdwallet-provider' =>note the seed of your metamsk wallet in a file ".secret"
-   | in the dapp directory
-   |
-  run :     'compil --all' | to deploy on ropsten
-  launch ganache then : | run     'migrate --reset --network ropsten'
-  => contracts => add the truffle-config.js and save |
+  download :[ganache](https://www.trufflesuite.com/ganache) in metamask specify a new port for ganache : 7545  in the dapp directory run :     'compil --all'   launch ganache then : => contracts => add the truffle-config.js and save| run :     'npm @truffle/hdwallet-provider' =>note the seed of your metamsk wallet in a file ".secret" to deploy on ropsten  run     'migrate --reset --network ropsten'
+
 
   run :     'migrate --reset' |
   (to deploy the contract on the ganache blockchain) |
@@ -131,7 +114,7 @@
   * [provableAPI](https://github.com/provable-things/ethereum-api)
 
  ## Author
-  * **ibourn** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+  * **ibourn** - *Initial work*
 
  ## License
   none

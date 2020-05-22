@@ -1,13 +1,13 @@
 # CoinflipDapp
 
- ##Theme
+ ## Theme
   a betting dapp on ethereum.
   This dapp is for educational purpose so don't use it on the mainnet.
 
- ##The rules :
+ ## The rules :
   The user bet, a random number is taken : odd, the bet is won, even, it's lost. The initial reward is 2 times the amount of the bet.
 
- ##Motivation
+ ## Motivation
   it's is one project as part of the **Ivan On Tech’s courses**. A wonderful place to learn about crypto and  blockchain development with a great community!
   [Ivan on tech Academy](https://academy.ivanontech.com/)
   you can follow his "good morning crypto" each and every morning at :
@@ -16,16 +16,16 @@
   Thanks to __@ivan-liljeqvist__ and __@filipmartinsson__ to make this knowledge accessible and simple.
 
   >I really enjoy following this course and developing a dapp. Looking for issues and additional >knowledge as part of the process. Certainly a little step but it's a first for me! Perhaps a >track for a future reconversion. However, much remains to be done :
-  >* finish these courses with eth game developing, then eos and btc programming,
-  >* learn, and validate with recognized certificates, web programming in order to be a full->stack dev.
+  * finish these courses with eth game developing, then eos and btc programming,
+  * learn, and validate with recognized certificates, web programming in order to be a full->stack dev.
 
 
- ##Presentation
+ ## Presentation
   long video due to the waiting time for the transactions
   [video](https://vimeo.com/421694810)
 
 
- ##Goals of the project :
+ ## Goals of the project :
   * to develop an ethereum smart contract and deploy it on ropsten testnet.
   * to make use of an oracle.
   * to create the front-end to interact with the contract
@@ -33,7 +33,7 @@
   the use of an oracle is relevant in this context to obtain a random number. Indeed, due to the consensus mechanism, one transaction validated can't have many different state in each nodes (the case where the random number is computed inside the contract in a transaction in each nodes). So make this random number be computed off-chain via an oracle allow to have a same state in each node : one transaction to query a random number, and one another with the final treatment (the same random number is part of the transaction across the network).
 
 
-  >__improvement :__ to follow up the course about security, i make the contract upgradeable >using a proxy pattern. The goal is to split data and logic. By making inherit the proxy from a >storage contract storage we can make them persistent while allowing to modify the logic >contract by providing its address to the proxy.   
+  >__improvement :__ to follow up the course about security, i make the contract upgradeable using a proxy pattern. The goal is to split data and logic. By making inherit the proxy from a storage contract storage we can make them persistent while allowing to modify the logic contract by providing its address to the proxy.   
 
   #### learning gained :
     * language
@@ -77,7 +77,8 @@
 
   run :     npm install truffle -g
 
-  ####usage for a **local network** : | #####for **ropsten** usage :
+  usage for a **local network** : | for **ropsten** usage :
+  ------------------------------------|-----------------------------
   download :[ganache](https://www.trufflesuite.com/ganache) | run :     'npm @truffle/hdwallet-provider'
   in metamask specify a new port for ganache : 7545 |=>note the seed of your metamsk wallet in a file ".secret"
    | in the dapp directory

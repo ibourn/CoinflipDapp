@@ -1,0 +1,22 @@
+{
+  "name": "coinflipdapp",
+  "version": "1.0.0",
+  "description": "coinflip via oracle",
+  "main": "main.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "CoinflipDapp"
+  },
+  "author": "ibourn",
+  "license": "ISC",
+  "dependencies": {
+    "@truffle/hdwallet-provider": "^1.0.35",
+    "truffle": "^5.1.26"
+  }
+}

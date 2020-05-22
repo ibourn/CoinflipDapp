@@ -1,0 +1,1564 @@
+{
+  "contractName": "CoinflipStorage",
+  "abi": [],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.2+commit.1df8f40c\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/C/Xdev/blockchain/ethereumCourseAdvanced/CoinflipDapp/contracts/CoinflipStorage.sol\":\"CoinflipStorage\"},\"evmVersion\":\"byzantium\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/C/Xdev/blockchain/ethereumCourseAdvanced/CoinflipDapp/contracts/CoinflipOwnable.sol\":{\"keccak256\":\"0xe3ccc5ee268c6d7820916f18100eeccfc99c00f0b7e0d933315f8daf31046521\",\"urls\":[\"bzzr://2c50d9564f048a90de19cb7fb6ddbd9876f4a63b0fac32a0161cd66e179177c7\"]},\"/C/Xdev/blockchain/ethereumCourseAdvanced/CoinflipDapp/contracts/CoinflipPausable.sol\":{\"keccak256\":\"0x9f869908cf833a71abba54ca35dec6ee999af4a6efc89aa57573c92e4f2debd6\",\"urls\":[\"bzzr://c80f97025a6b2c2a021f5fd94d88b76c723f135faf4908f3d0db739d31d5d96f\"]},\"/C/Xdev/blockchain/ethereumCourseAdvanced/CoinflipDapp/contracts/CoinflipStorage.sol\":{\"keccak256\":\"0x1e2499065a11712e3fef7c33f1e29fb2a8cf6fd77f54a332b353bad2376587a0\",\"urls\":[\"bzzr://2a83e5bb48f30ccc3e1fb793f5b10f9544e76000ff79ab675992cdf628230d51\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603580601d6000396000f3fe6080604052600080fdfea165627a7a72305820b13d8403531722eb34ba47ca38a69eafca440d773b6dd0e014980848b9f4b9640029",
+  "deployedBytecode": "0x6080604052600080fdfea165627a7a72305820b13d8403531722eb34ba47ca38a69eafca440d773b6dd0e014980848b9f4b9640029",
+  "sourceMap": "439:2630:7:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;439:2630:7;;;;;;;",
+  "deployedSourceMap": "439:2630:7:-;;;;;",
+  "source": "pragma solidity 0.5.2;\r\n\r\nimport \"./CoinflipOwnable.sol\";\r\nimport \"./CoinflipPausable.sol\";\r\n\r\n//Storage allows persistent storage => It shouldn't be modified\r\n//\r\n//inheritance justification : parent of base contract to allow access, computation... of the data\r\n//and parent of proxy cause the scope of the fallback function will be the proxy context\r\n//=> thus the real persistent storage is inside the storage contract parent of proxy\r\ncontract CoinflipStorage is Ownable, Pausable{\r\n  //MEMO\r\n  // assert(1 wei == 1);\r\n  // assert(1 szabo == 1e12);\r\n  // assert(1 finney == 1e15);\r\n  // assert(1 ether == 1e18); //or 10**18\r\n  //MEMO : ganache n'affiche pas les maps dans storage car ce sont des hash et non des index\r\n  //donc impossible à retrouver ou itérer pour lecture\r\n  //MEMO mapping string=>x en PUBLIC pas possible car string est dynamic array donc taille non fixe\r\n\r\n  //Bet structure\r\n  struct Bet {\r\n      uint256 _amountBet;                      //amount of the bet\r\n      uint256 _jackpotFactor;                  //jackpot = amount*factor\r\n      bool _isWin;                             //bet won\r\n      bool _isClosed;                          //bet closed\r\n      bool _isClaimed;                         //reward claimed\r\n  }\r\n\r\n  //Account structure\r\n  struct Account {\r\n      bool _hasBetOpen;                         //a bet is in progress =>waiting for a result\r\n      bool _isKnown;                            //account already logged\r\n      string _name;                             //name (optional)\r\n      //usage of _firstBetToClaimId : index in _accountBets\r\n      //0 : no bet to claim\r\n      //index = _firstBetToClaimId-1\r\n      uint256 _firstBetToClaimId;               //index in _accountBets\r\n      uint256[] _accountBets;                   //bet index listed in _listOfBets\r\n      //usage of _uintAccount: for dapp and future stats implementation\r\n      // _uintAccount['rewardToClaim']\r\n      // _uintAccount['totalWon']\r\n      // _uintAccount['totalLost']\r\n      // _uintAccount['lastBetOfUserId']\r\n      mapping (string => uint256) _uintAccount; //storage of uint variable\r\n      //for future usage\r\n      mapping (string => int256) _intAccount;   //storage of int variable\r\n  }\r\n  //----------------Variables\r\n  string _MsgToChain;                           //persistent msg to users\r\n\r\n  //arrays and mappings\r\n  Bet[] internal _listOfBets;                    //list of all bets\r\n  address[] internal _listOfAccounts;                   //list of all user addresses\r\n  mapping (address => Account) internal _Accounts;      //mapping address/account\r\n  mapping (bytes32 => address) internal _Queries;       // QueriId / address of user\r\n\r\n  //Generic mappings to allow upgradeable state variables\r\n  //usage of _uintStorage\r\n  //  _uintStorage['totalRewardToClaim']\r\n  //  _uintStorage['maximumBet']\r\n  //  _uintStorage['minimumBet']\r\n  //  _uintStorage['jackpotFactor']\r\n  mapping (string => uint256) _uintStorage;\r\n  //usage of _boolStrorage\r\n  //  _boolStrorage['initialized']\r\n  mapping (string => bool) _boolStorage;\r\n\r\n}\r\n",
+  "sourcePath": "C:\\Xdev\\blockchain\\ethereumCourseAdvanced\\CoinflipDapp\\contracts\\CoinflipStorage.sol",
+  "ast": {
+    "absolutePath": "/C/Xdev/blockchain/ethereumCourseAdvanced/CoinflipDapp/contracts/CoinflipStorage.sol",
+    "exportedSymbols": {
+      "CoinflipStorage": [
+        1946
+      ]
+    },
+    "id": 1947,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1884,
+        "literals": [
+          "solidity",
+          "0.5",
+          ".2"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:22:7"
+      },
+      {
+        "absolutePath": "/C/Xdev/blockchain/ethereumCourseAdvanced/CoinflipDapp/contracts/CoinflipOwnable.sol",
+        "file": "./CoinflipOwnable.sol",
+        "id": 1885,
+        "nodeType": "ImportDirective",
+        "scope": 1947,
+        "sourceUnit": 1809,
+        "src": "26:31:7",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/C/Xdev/blockchain/ethereumCourseAdvanced/CoinflipDapp/contracts/CoinflipPausable.sol",
+        "file": "./CoinflipPausable.sol",
+        "id": 1886,
+        "nodeType": "ImportDirective",
+        "scope": 1947,
+        "sourceUnit": 1831,
+        "src": "59:32:7",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 1887,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 1808,
+              "src": "467:7:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$1808",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 1888,
+            "nodeType": "InheritanceSpecifier",
+            "src": "467:7:7"
+          },
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 1889,
+              "name": "Pausable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 1830,
+              "src": "476:8:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Pausable_$1830",
+                "typeString": "contract Pausable"
+              }
+            },
+            "id": 1890,
+            "nodeType": "InheritanceSpecifier",
+            "src": "476:8:7"
+          }
+        ],
+        "contractDependencies": [
+          1808,
+          1830
+        ],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 1946,
+        "linearizedBaseContracts": [
+          1946,
+          1830,
+          1808
+        ],
+        "name": "CoinflipStorage",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "CoinflipStorage.Bet",
+            "id": 1901,
+            "members": [
+              {
+                "constant": false,
+                "id": 1892,
+                "name": "_amountBet",
+                "nodeType": "VariableDeclaration",
+                "scope": 1901,
+                "src": "925:18:7",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 1891,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "925:7:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1894,
+                "name": "_jackpotFactor",
+                "nodeType": "VariableDeclaration",
+                "scope": 1901,
+                "src": "993:22:7",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 1893,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "993:7:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1896,
+                "name": "_isWin",
+                "nodeType": "VariableDeclaration",
+                "scope": 1901,
+                "src": "1067:11:7",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 1895,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1067:4:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1898,
+                "name": "_isClosed",
+                "nodeType": "VariableDeclaration",
+                "scope": 1901,
+                "src": "1125:14:7",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 1897,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1125:4:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1900,
+                "name": "_isClaimed",
+                "nodeType": "VariableDeclaration",
+                "scope": 1901,
+                "src": "1186:15:7",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 1899,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1186:4:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Bet",
+            "nodeType": "StructDefinition",
+            "scope": 1946,
+            "src": "905:343:7",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "CoinflipStorage.Account",
+            "id": 1921,
+            "members": [
+              {
+                "constant": false,
+                "id": 1903,
+                "name": "_hasBetOpen",
+                "nodeType": "VariableDeclaration",
+                "scope": 1921,
+                "src": "1301:16:7",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 1902,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1301:4:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1905,
+                "name": "_isKnown",
+                "nodeType": "VariableDeclaration",
+                "scope": 1921,
+                "src": "1396:13:7",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 1904,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1396:4:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1907,
+                "name": "_name",
+                "nodeType": "VariableDeclaration",
+                "scope": 1921,
+                "src": "1470:12:7",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 1906,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1470:6:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1909,
+                "name": "_firstBetToClaimId",
+                "nodeType": "VariableDeclaration",
+                "scope": 1921,
+                "src": "1665:26:7",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 1908,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1665:7:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1912,
+                "name": "_accountBets",
+                "nodeType": "VariableDeclaration",
+                "scope": 1921,
+                "src": "1738:22:7",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
+                  "typeString": "uint256[]"
+                },
+                "typeName": {
+                  "baseType": {
+                    "id": 1910,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1738:7:7",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 1911,
+                  "length": null,
+                  "nodeType": "ArrayTypeName",
+                  "src": "1738:9:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
+                    "typeString": "uint256[]"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1916,
+                "name": "_uintAccount",
+                "nodeType": "VariableDeclaration",
+                "scope": 1921,
+                "src": "2047:40:7",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_string_memory_$_t_uint256_$",
+                  "typeString": "mapping(string => uint256)"
+                },
+                "typeName": {
+                  "id": 1915,
+                  "keyType": {
+                    "id": 1913,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2056:6:7",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "nodeType": "Mapping",
+                  "src": "2047:27:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_mapping$_t_string_memory_$_t_uint256_$",
+                    "typeString": "mapping(string => uint256)"
+                  },
+                  "valueType": {
+                    "id": 1914,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2066:7:7",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1920,
+                "name": "_intAccount",
+                "nodeType": "VariableDeclaration",
+                "scope": 1921,
+                "src": "2149:38:7",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_string_memory_$_t_int256_$",
+                  "typeString": "mapping(string => int256)"
+                },
+                "typeName": {
+                  "id": 1919,
+                  "keyType": {
+                    "id": 1917,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2158:6:7",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "nodeType": "Mapping",
+                  "src": "2149:26:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_mapping$_t_string_memory_$_t_int256_$",
+                    "typeString": "mapping(string => int256)"
+                  },
+                  "valueType": {
+                    "id": 1918,
+                    "name": "int256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2168:6:7",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_int256",
+                      "typeString": "int256"
+                    }
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Account",
+            "nodeType": "StructDefinition",
+            "scope": 1946,
+            "src": "1277:944:7",
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 1923,
+            "name": "_MsgToChain",
+            "nodeType": "VariableDeclaration",
+            "scope": 1946,
+            "src": "2256:18:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_string_storage",
+              "typeString": "string"
+            },
+            "typeName": {
+              "id": 1922,
+              "name": "string",
+              "nodeType": "ElementaryTypeName",
+              "src": "2256:6:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_string_storage_ptr",
+                "typeString": "string"
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 1926,
+            "name": "_listOfBets",
+            "nodeType": "VariableDeclaration",
+            "scope": 1946,
+            "src": "2358:26:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_array$_t_struct$_Bet_$1901_storage_$dyn_storage",
+              "typeString": "struct CoinflipStorage.Bet[]"
+            },
+            "typeName": {
+              "baseType": {
+                "contractScope": null,
+                "id": 1924,
+                "name": "Bet",
+                "nodeType": "UserDefinedTypeName",
+                "referencedDeclaration": 1901,
+                "src": "2358:3:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_Bet_$1901_storage_ptr",
+                  "typeString": "struct CoinflipStorage.Bet"
+                }
+              },
+              "id": 1925,
+              "length": null,
+              "nodeType": "ArrayTypeName",
+              "src": "2358:5:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_array$_t_struct$_Bet_$1901_storage_$dyn_storage_ptr",
+                "typeString": "struct CoinflipStorage.Bet[]"
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 1929,
+            "name": "_listOfAccounts",
+            "nodeType": "VariableDeclaration",
+            "scope": 1946,
+            "src": "2427:34:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_array$_t_address_$dyn_storage",
+              "typeString": "address[]"
+            },
+            "typeName": {
+              "baseType": {
+                "id": 1927,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "2427:7:7",
+                "stateMutability": "nonpayable",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "id": 1928,
+              "length": null,
+              "nodeType": "ArrayTypeName",
+              "src": "2427:9:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
+                "typeString": "address[]"
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 1933,
+            "name": "_Accounts",
+            "nodeType": "VariableDeclaration",
+            "scope": 1946,
+            "src": "2513:47:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Account_$1921_storage_$",
+              "typeString": "mapping(address => struct CoinflipStorage.Account)"
+            },
+            "typeName": {
+              "id": 1932,
+              "keyType": {
+                "id": 1930,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "2522:7:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "2513:28:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Account_$1921_storage_$",
+                "typeString": "mapping(address => struct CoinflipStorage.Account)"
+              },
+              "valueType": {
+                "contractScope": null,
+                "id": 1931,
+                "name": "Account",
+                "nodeType": "UserDefinedTypeName",
+                "referencedDeclaration": 1921,
+                "src": "2533:7:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_Account_$1921_storage_ptr",
+                  "typeString": "struct CoinflipStorage.Account"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 1937,
+            "name": "_Queries",
+            "nodeType": "VariableDeclaration",
+            "scope": 1946,
+            "src": "2596:46:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_bytes32_$_t_address_$",
+              "typeString": "mapping(bytes32 => address)"
+            },
+            "typeName": {
+              "id": 1936,
+              "keyType": {
+                "id": 1934,
+                "name": "bytes32",
+                "nodeType": "ElementaryTypeName",
+                "src": "2605:7:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bytes32",
+                  "typeString": "bytes32"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "2596:28:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_bytes32_$_t_address_$",
+                "typeString": "mapping(bytes32 => address)"
+              },
+              "valueType": {
+                "id": 1935,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "2616:7:7",
+                "stateMutability": "nonpayable",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 1941,
+            "name": "_uintStorage",
+            "nodeType": "VariableDeclaration",
+            "scope": 1946,
+            "src": "2917:40:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_string_memory_$_t_uint256_$",
+              "typeString": "mapping(string => uint256)"
+            },
+            "typeName": {
+              "id": 1940,
+              "keyType": {
+                "id": 1938,
+                "name": "string",
+                "nodeType": "ElementaryTypeName",
+                "src": "2926:6:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "2917:27:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_string_memory_$_t_uint256_$",
+                "typeString": "mapping(string => uint256)"
+              },
+              "valueType": {
+                "id": 1939,
+                "name": "uint256",
+                "nodeType": "ElementaryTypeName",
+                "src": "2936:7:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 1945,
+            "name": "_boolStorage",
+            "nodeType": "VariableDeclaration",
+            "scope": 1946,
+            "src": "3026:37:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_string_memory_$_t_bool_$",
+              "typeString": "mapping(string => bool)"
+            },
+            "typeName": {
+              "id": 1944,
+              "keyType": {
+                "id": 1942,
+                "name": "string",
+                "nodeType": "ElementaryTypeName",
+                "src": "3035:6:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "3026:24:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_string_memory_$_t_bool_$",
+                "typeString": "mapping(string => bool)"
+              },
+              "valueType": {
+                "id": 1943,
+                "name": "bool",
+                "nodeType": "ElementaryTypeName",
+                "src": "3045:4:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          }
+        ],
+        "scope": 1947,
+        "src": "439:2630:7"
+      }
+    ],
+    "src": "0:3071:7"
+  },
+  "legacyAST": {
+    "absolutePath": "/C/Xdev/blockchain/ethereumCourseAdvanced/CoinflipDapp/contracts/CoinflipStorage.sol",
+    "exportedSymbols": {
+      "CoinflipStorage": [
+        1946
+      ]
+    },
+    "id": 1947,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1884,
+        "literals": [
+          "solidity",
+          "0.5",
+          ".2"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:22:7"
+      },
+      {
+        "absolutePath": "/C/Xdev/blockchain/ethereumCourseAdvanced/CoinflipDapp/contracts/CoinflipOwnable.sol",
+        "file": "./CoinflipOwnable.sol",
+        "id": 1885,
+        "nodeType": "ImportDirective",
+        "scope": 1947,
+        "sourceUnit": 1809,
+        "src": "26:31:7",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/C/Xdev/blockchain/ethereumCourseAdvanced/CoinflipDapp/contracts/CoinflipPausable.sol",
+        "file": "./CoinflipPausable.sol",
+        "id": 1886,
+        "nodeType": "ImportDirective",
+        "scope": 1947,
+        "sourceUnit": 1831,
+        "src": "59:32:7",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 1887,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 1808,
+              "src": "467:7:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$1808",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 1888,
+            "nodeType": "InheritanceSpecifier",
+            "src": "467:7:7"
+          },
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 1889,
+              "name": "Pausable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 1830,
+              "src": "476:8:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Pausable_$1830",
+                "typeString": "contract Pausable"
+              }
+            },
+            "id": 1890,
+            "nodeType": "InheritanceSpecifier",
+            "src": "476:8:7"
+          }
+        ],
+        "contractDependencies": [
+          1808,
+          1830
+        ],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 1946,
+        "linearizedBaseContracts": [
+          1946,
+          1830,
+          1808
+        ],
+        "name": "CoinflipStorage",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "CoinflipStorage.Bet",
+            "id": 1901,
+            "members": [
+              {
+                "constant": false,
+                "id": 1892,
+                "name": "_amountBet",
+                "nodeType": "VariableDeclaration",
+                "scope": 1901,
+                "src": "925:18:7",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 1891,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "925:7:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1894,
+                "name": "_jackpotFactor",
+                "nodeType": "VariableDeclaration",
+                "scope": 1901,
+                "src": "993:22:7",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 1893,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "993:7:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1896,
+                "name": "_isWin",
+                "nodeType": "VariableDeclaration",
+                "scope": 1901,
+                "src": "1067:11:7",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 1895,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1067:4:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1898,
+                "name": "_isClosed",
+                "nodeType": "VariableDeclaration",
+                "scope": 1901,
+                "src": "1125:14:7",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 1897,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1125:4:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1900,
+                "name": "_isClaimed",
+                "nodeType": "VariableDeclaration",
+                "scope": 1901,
+                "src": "1186:15:7",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 1899,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1186:4:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Bet",
+            "nodeType": "StructDefinition",
+            "scope": 1946,
+            "src": "905:343:7",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "CoinflipStorage.Account",
+            "id": 1921,
+            "members": [
+              {
+                "constant": false,
+                "id": 1903,
+                "name": "_hasBetOpen",
+                "nodeType": "VariableDeclaration",
+                "scope": 1921,
+                "src": "1301:16:7",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 1902,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1301:4:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1905,
+                "name": "_isKnown",
+                "nodeType": "VariableDeclaration",
+                "scope": 1921,
+                "src": "1396:13:7",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 1904,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1396:4:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1907,
+                "name": "_name",
+                "nodeType": "VariableDeclaration",
+                "scope": 1921,
+                "src": "1470:12:7",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 1906,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1470:6:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1909,
+                "name": "_firstBetToClaimId",
+                "nodeType": "VariableDeclaration",
+                "scope": 1921,
+                "src": "1665:26:7",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 1908,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1665:7:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1912,
+                "name": "_accountBets",
+                "nodeType": "VariableDeclaration",
+                "scope": 1921,
+                "src": "1738:22:7",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
+                  "typeString": "uint256[]"
+                },
+                "typeName": {
+                  "baseType": {
+                    "id": 1910,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1738:7:7",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 1911,
+                  "length": null,
+                  "nodeType": "ArrayTypeName",
+                  "src": "1738:9:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
+                    "typeString": "uint256[]"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1916,
+                "name": "_uintAccount",
+                "nodeType": "VariableDeclaration",
+                "scope": 1921,
+                "src": "2047:40:7",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_string_memory_$_t_uint256_$",
+                  "typeString": "mapping(string => uint256)"
+                },
+                "typeName": {
+                  "id": 1915,
+                  "keyType": {
+                    "id": 1913,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2056:6:7",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "nodeType": "Mapping",
+                  "src": "2047:27:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_mapping$_t_string_memory_$_t_uint256_$",
+                    "typeString": "mapping(string => uint256)"
+                  },
+                  "valueType": {
+                    "id": 1914,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2066:7:7",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1920,
+                "name": "_intAccount",
+                "nodeType": "VariableDeclaration",
+                "scope": 1921,
+                "src": "2149:38:7",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_string_memory_$_t_int256_$",
+                  "typeString": "mapping(string => int256)"
+                },
+                "typeName": {
+                  "id": 1919,
+                  "keyType": {
+                    "id": 1917,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2158:6:7",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "nodeType": "Mapping",
+                  "src": "2149:26:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_mapping$_t_string_memory_$_t_int256_$",
+                    "typeString": "mapping(string => int256)"
+                  },
+                  "valueType": {
+                    "id": 1918,
+                    "name": "int256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2168:6:7",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_int256",
+                      "typeString": "int256"
+                    }
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Account",
+            "nodeType": "StructDefinition",
+            "scope": 1946,
+            "src": "1277:944:7",
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 1923,
+            "name": "_MsgToChain",
+            "nodeType": "VariableDeclaration",
+            "scope": 1946,
+            "src": "2256:18:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_string_storage",
+              "typeString": "string"
+            },
+            "typeName": {
+              "id": 1922,
+              "name": "string",
+              "nodeType": "ElementaryTypeName",
+              "src": "2256:6:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_string_storage_ptr",
+                "typeString": "string"
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 1926,
+            "name": "_listOfBets",
+            "nodeType": "VariableDeclaration",
+            "scope": 1946,
+            "src": "2358:26:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_array$_t_struct$_Bet_$1901_storage_$dyn_storage",
+              "typeString": "struct CoinflipStorage.Bet[]"
+            },
+            "typeName": {
+              "baseType": {
+                "contractScope": null,
+                "id": 1924,
+                "name": "Bet",
+                "nodeType": "UserDefinedTypeName",
+                "referencedDeclaration": 1901,
+                "src": "2358:3:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_Bet_$1901_storage_ptr",
+                  "typeString": "struct CoinflipStorage.Bet"
+                }
+              },
+              "id": 1925,
+              "length": null,
+              "nodeType": "ArrayTypeName",
+              "src": "2358:5:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_array$_t_struct$_Bet_$1901_storage_$dyn_storage_ptr",
+                "typeString": "struct CoinflipStorage.Bet[]"
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 1929,
+            "name": "_listOfAccounts",
+            "nodeType": "VariableDeclaration",
+            "scope": 1946,
+            "src": "2427:34:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_array$_t_address_$dyn_storage",
+              "typeString": "address[]"
+            },
+            "typeName": {
+              "baseType": {
+                "id": 1927,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "2427:7:7",
+                "stateMutability": "nonpayable",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "id": 1928,
+              "length": null,
+              "nodeType": "ArrayTypeName",
+              "src": "2427:9:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
+                "typeString": "address[]"
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 1933,
+            "name": "_Accounts",
+            "nodeType": "VariableDeclaration",
+            "scope": 1946,
+            "src": "2513:47:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Account_$1921_storage_$",
+              "typeString": "mapping(address => struct CoinflipStorage.Account)"
+            },
+            "typeName": {
+              "id": 1932,
+              "keyType": {
+                "id": 1930,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "2522:7:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "2513:28:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Account_$1921_storage_$",
+                "typeString": "mapping(address => struct CoinflipStorage.Account)"
+              },
+              "valueType": {
+                "contractScope": null,
+                "id": 1931,
+                "name": "Account",
+                "nodeType": "UserDefinedTypeName",
+                "referencedDeclaration": 1921,
+                "src": "2533:7:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_Account_$1921_storage_ptr",
+                  "typeString": "struct CoinflipStorage.Account"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 1937,
+            "name": "_Queries",
+            "nodeType": "VariableDeclaration",
+            "scope": 1946,
+            "src": "2596:46:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_bytes32_$_t_address_$",
+              "typeString": "mapping(bytes32 => address)"
+            },
+            "typeName": {
+              "id": 1936,
+              "keyType": {
+                "id": 1934,
+                "name": "bytes32",
+                "nodeType": "ElementaryTypeName",
+                "src": "2605:7:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bytes32",
+                  "typeString": "bytes32"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "2596:28:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_bytes32_$_t_address_$",
+                "typeString": "mapping(bytes32 => address)"
+              },
+              "valueType": {
+                "id": 1935,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "2616:7:7",
+                "stateMutability": "nonpayable",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 1941,
+            "name": "_uintStorage",
+            "nodeType": "VariableDeclaration",
+            "scope": 1946,
+            "src": "2917:40:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_string_memory_$_t_uint256_$",
+              "typeString": "mapping(string => uint256)"
+            },
+            "typeName": {
+              "id": 1940,
+              "keyType": {
+                "id": 1938,
+                "name": "string",
+                "nodeType": "ElementaryTypeName",
+                "src": "2926:6:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "2917:27:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_string_memory_$_t_uint256_$",
+                "typeString": "mapping(string => uint256)"
+              },
+              "valueType": {
+                "id": 1939,
+                "name": "uint256",
+                "nodeType": "ElementaryTypeName",
+                "src": "2936:7:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 1945,
+            "name": "_boolStorage",
+            "nodeType": "VariableDeclaration",
+            "scope": 1946,
+            "src": "3026:37:7",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_string_memory_$_t_bool_$",
+              "typeString": "mapping(string => bool)"
+            },
+            "typeName": {
+              "id": 1944,
+              "keyType": {
+                "id": 1942,
+                "name": "string",
+                "nodeType": "ElementaryTypeName",
+                "src": "3035:6:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "3026:24:7",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_string_memory_$_t_bool_$",
+                "typeString": "mapping(string => bool)"
+              },
+              "valueType": {
+                "id": 1943,
+                "name": "bool",
+                "nodeType": "ElementaryTypeName",
+                "src": "3045:4:7",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          }
+        ],
+        "scope": 1947,
+        "src": "439:2630:7"
+      }
+    ],
+    "src": "0:3071:7"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.2+commit.1df8f40c.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.1.0",
+  "updatedAt": "2020-05-22T21:08:41.943Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

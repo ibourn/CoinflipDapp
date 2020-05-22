@@ -64,19 +64,20 @@
   via the powershell go in the dapp directory : `cd C:\xxxx\CoinflipDapp (windows)`
   run : `npm install truffle -g`
 
-  usage for a **local network** : | for **ropsten** usage :
-  ------------------------------------|-----------------------------
-  download :[ganache](https://www.trufflesuite.com/ganache) in metamask specify a new port for ganache : 7545  in the dapp directory run :     'compil --all'   launch ganache then : => contracts => add the truffle-config.js and save| run :     'npm @truffle/hdwallet-provider' =>note the seed of your metamsk wallet in a file ".secret" to deploy on ropsten  run     'migrate --reset --network ropsten'
-
-
-  run :     'migrate --reset' |
-  (to deploy the contract on the ganache blockchain) |
-  =>note the address of the proxy contract |
-  and put it in the variable addContract |
-  in the main.js |
-  =>import the accounts private keys from ganache |
-   in metamask (account[0] is the owner of the contract) |
-
+  **local network**  | **ropsten**
+  ------------------------------------|------------------------------------
+  download :[ganache](https://www.trufflesuite.com/ganache)
+  in metamask specify a new port for ganache : 7545  
+  in the dapp directory run :     'compil --all'   
+  launch ganache then :
+  => contracts => add the truffle-config.js and save
+  run :     'migrate --reset'
+  (to deploy the contract on the ganache blockchain)
+  =>note the address of the proxy contract
+  and put it in the variable addContract
+  in the main.js
+  =>import the accounts private keys from ganache
+   in metamask (account[0] is the owner of the contract) | run :     'npm @truffle/hdwallet-provider' =>note the seed of your metamsk wallet in a file ".secret" to deploy on ropsten  run     'migrate --reset --network ropsten'
 
   run :     'python -m http.server' (your local web server)
   access your dapp in the browser at : http://127.0.0.1:8000/

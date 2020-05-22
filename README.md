@@ -69,8 +69,7 @@
   ------------------------------------|------------------------------------
   download :[ganache](https://www.trufflesuite.com/ganache) & launch ganache then : => contracts => add the truffle-config.js and save |  run : `npm @truffle/hdwallet-provider` and =>copy the seed of your metamask wallet in a file ".secret"
   run : `migrate --reset` | run `migrate --reset --network ropsten`
-  =>note the address of the proxy contract and put it in the variable addContract
-  in the main.js
+  =>note the address of the proxy contract and put it in the variable addContract in the main.js
   =>import the accounts private keys from ganache in metamask (account[0] is the owner of the contract)  
 
   run : `python -m http.server` (your local web server) / access your dapp in the browser at : http://127.0.0.1:8000/

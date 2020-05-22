@@ -4,7 +4,7 @@
   a betting dapp on ethereum.
   This dapp is for educational purpose so don't use it on the mainnet.
 
- ## The rules :
+ ## The rules
   The user bet, a random number is taken : odd, the bet is won, even, it's lost. The initial reward is 2 times the amount of the bet.
 
  ## Motivation
@@ -13,19 +13,19 @@
 
   Thanks to __@ivan-liljeqvist__ and __@filipmartinsson__ to make this knowledge accessible and simple.
 
-  >I really enjoy following this course and developing a dapp. Looking for issues and additional >knowledge as part of the process. Certainly a little step but it's a first for me! Perhaps a >track for a future reconversion. However, much remains to be done : finish these courses with eth game developing, then eos and btc programming / learn, and validate with recognized certificates, web programming in order to be a full->stack dev.
+  >I really enjoy following this course and developing a dapp. Looking for issues and additional knowledge as part of the process. Certainly a little step but it's a first for me! Perhaps a track for a future reconversion. However, much remains to be done : finish these courses with eth game developing, then eos and btc programming / learn, and validate with recognized certificates, web programming in order to be a full->stack dev.
 
  ## Presentation
   this is a long [video](https://vimeo.com/421694810) due to the waiting time for the transactions
 
- ## Goals of the project :
+ ## Goals of the project
   * to develop an ethereum smart contract and deploy it on ropsten testnet.
   * to make use of an oracle.
   * to create the front-end to interact with the contract
 
-  the use of an oracle is relevant in this context to obtain a random number. Indeed, due to the consensus mechanism, one transaction validated can't have many different states in each node (if the random number is computed inside the contract in each nodes). So make this random number be computed off-chain via an oracle allow to have a same state in each node : one transaction to query a random number, and one another with the final treatment (the same random number is part of the transaction across the network).
+  the use of an oracle is relevant in this context to obtain a random number. Indeed, due to the consensus mechanism, one transaction validated can't have many different states in each node (if the random number is computed inside the contract in each nodes). So make this random number be computed off-chain via an oracle allows to have a same state in each node : one transaction to query a random number, and one another with the final treatment (the same random number is part of the transaction across the network).
 
-  >__improvement :__ to follow up the course about security, i make the contract upgradeable using a proxy pattern. The goal is to split data and logic. By making inherit the proxy from a storage contract storage we can make them persistent while allowing to modify the logic contract by providing its address to the proxy.   
+  >__improvement :__ to follow up the course about security, i make the contract upgradeable using a proxy pattern. The goal is to split data and logic, then by making inherit the proxy from a storage contract we can make them persistent while allowing to modify the logic contract by providing its address to the proxy. This pattern is used with a delegatecall in the fallback function of proxy allowing to use logic's functions with the context of proxy.
 
   #### learning gained :
     * language :
@@ -55,8 +55,7 @@
   * get some testnet eth : https://faucet.metamask.io/
 
   ### For users :
-  in the directory of the dapp open a console and run : `python -m http.server`
-  in your browser : http://127.0.0.1:8000/
+  in the directory of the dapp open a console and run : `python -m http.server` / in your browser : http://127.0.0.1:8000/
 
   ### For development :
   #### Prerequisites :
@@ -74,18 +73,18 @@
   in the main.js
   =>import the accounts private keys from ganache in metamask (account[0] is the owner of the contract)  
 
-  run : `python -m http.server` (your local web server)
-  access your dapp in the browser at : http://127.0.0.1:8000/
+  run : `python -m http.server` (your local web server) / access your dapp in the browser at : http://127.0.0.1:8000/
 
   and play!
 
-  ####to upgrade the contract :
-  in the 2_deploy_Coinflip.js file find the part "upgrade" and recopy the same process with the new contract then deploy with    'migrate --reset'    (according to the network used)
-  copy/paste the abi of the new contract from build directory to abi.js
-  copy the address of proxy from ganache to the variable addContract in main.js
-  and launch the python server
+  #### to upgrade the contract :
+  * in the 2_deploy_Coinflip.js file find the part "upgrade" and recopy the same process with the new
+  * contract then deploy with `migrate --reset`(according to the network used)
+  * copy/paste the abi of the new contract from build directory to abi.js
+  * copy the address of proxy from ganache to the variable addContract in main.js
+  * and launch the python server
 
-  ###troubleshooting :
+  ### troubleshooting :
    * on windows for the powershell you need to modify the security to allow scripts :
    'set-ExecutionPolicy remoteSigned' ('set-ExecutionPolicy Restricted')
    * for testing purpose :

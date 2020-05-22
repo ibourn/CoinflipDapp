@@ -28,13 +28,13 @@
   >__improvement :__ to follow up the course about security, i make the contract upgradeable using a proxy pattern. The goal is to split data and logic. By making inherit the proxy from a storage contract storage we can make them persistent while allowing to modify the logic contract by providing its address to the proxy.   
 
   #### learning gained :
-    * language
+    * language :
      * ethereum programming language : solidity
      * approach of assembly code (low level language) for the delegate call allowing the proxy
       to use functions from logic contract with his context (scope) and his storage.
      * management of oracle and events
 
-    * tools and environment
+    * tools and environment :
      * remix ide
      * atom : text editor
      * node : JavaScript runtime built on Chrome's V8 engine (and nvm to manage the node versions)  
@@ -54,42 +54,36 @@
   * choose the ropsten network
   * get some testnet eth : https://faucet.metamask.io/
 
-  ### For users
+  ### For users :
   in the directory of the dapp open a console and run : `python -m http.server`
   in your browser : http://127.0.0.1:8000/
 
-  ### For development
-  #### Prerequisites
+  ### For development :
+  #### Prerequisites :
   install : [nodejs](https://nodejs.org/en/)
   via the powershell go in the dapp directory : `cd C:\xxxx\CoinflipDapp (windows)`
   run : `npm install truffle -g`
+  in metamask specify a new port for ganache : 7545 or select the network ropsten
+  in the dapp directory run : `compil --all`
 
   **local network**  | **ropsten**
   ------------------------------------|------------------------------------
-  download :[ganache](https://www.trufflesuite.com/ganache)
-  in metamask specify a new port for ganache : 7545  
-  in the dapp directory run :     'compil --all'   
-  launch ganache then :
-  => contracts => add the truffle-config.js and save
-  run :     'migrate --reset'
-  (to deploy the contract on the ganache blockchain)
-  =>note the address of the proxy contract
-  and put it in the variable addContract
+  download :[ganache](https://www.trufflesuite.com/ganache) & launch ganache then : => contracts => add the truffle-config.js and save |  run : `npm @truffle/hdwallet-provider` and =>copy the seed of your metamask wallet in a file ".secret"
+  run : `migrate --reset` | run `migrate --reset --network ropsten`
+  =>note the address of the proxy contract and put it in the variable addContract
   in the main.js
-  =>import the accounts private keys from ganache
-   in metamask (account[0] is the owner of the contract) | run :     'npm @truffle/hdwallet-provider' =>note the seed of your metamsk wallet in a file ".secret" to deploy on ropsten  run     'migrate --reset --network ropsten'
+  =>import the accounts private keys from ganache in metamask (account[0] is the owner of the contract)  
 
-  run :     'python -m http.server' (your local web server)
+  run : `python -m http.server` (your local web server)
   access your dapp in the browser at : http://127.0.0.1:8000/
 
   and play!
 
-  ####to upgrade the contract
+  ####to upgrade the contract :
   in the 2_deploy_Coinflip.js file find the part "upgrade" and recopy the same process with the new contract then deploy with    'migrate --reset'    (according to the network used)
   copy/paste the abi of the new contract from build directory to abi.js
   copy the address of proxy from ganache to the variable addContract in main.js
   and launch the python server
-
 
   ###troubleshooting :
    * on windows for the powershell you need to modify the security to allow scripts :
@@ -98,14 +92,12 @@
      * install truffle-assertions (the tests are not runnable as visibilty has been modified)
      * following the version of node : comment lines 868, 869 in the runner.js of mocha to avoid an issue with REPL
 
-
  ## additional documentation
- [w3schools](https://www.w3schools.com/)
- [forum eth](https://ethereum.stackexchange.com/)
- [solidity doc](https://solidity.readthedocs.io/en/develop/index.html)
- [web3js doc](https://web3js.readthedocs.io/en/v1.2.6/index.html)
+ [w3schools](https://www.w3schools.com/),
+ [ethereum forum](https://ethereum.stackexchange.com/),
+ [solidity doc](https://solidity.readthedocs.io/en/develop/index.html),
+ [web3js doc](https://web3js.readthedocs.io/en/v1.2.6/index.html),
  [provableAPI doc](https://docs.provable.xyz/#ethereum)
-
 
  ## Built With
   * solidity 0.5.2

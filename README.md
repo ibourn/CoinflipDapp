@@ -1,7 +1,7 @@
 # CoinflipDapp
 
  ## Theme
-  a betting dapp on ethereum upgradeable and using an oracle.
+  a betting dapp on ethereum upgradeable and using an oracle.<br/>
   This dapp is for educational purpose so don't use it on the mainnet.
 
  ## The rules

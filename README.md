@@ -13,7 +13,7 @@
 
   Thanks to __@ivan-liljeqvist__ and __@filipmartinsson__ to make this knowledge accessible and simple.
 
-  >I really enjoy following this course and developing a dapp. Looking for issues and additional knowledge as part of the process. Certainly a little step but it's a first for me! Perhaps a track for a future reconversion. However, much remains to be done : finish these courses with eth game developing, then eos and btc programming / learn, and validate with recognized certificates, web programming in order to be a full->stack dev.
+  >I really enjoy following this course and developing a dapp. Looking for issues and additional knowledge as part of the process. Certainly a little step but it's a first for me! Perhaps a track for a future reconversion. However, much remains to be done : eth game developing, eos and btc programming, web programming in order to be a full-stack.
 
  ## Presentation
   this is a long [video](https://vimeo.com/421694810) due to the waiting time for the transactions

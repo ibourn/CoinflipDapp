@@ -32,7 +32,7 @@
      * ethereum programming language : solidity
      * approach of assembly code (low level language) for the delegate call allowing the proxy
       to use functions from logic contract with his context (scope) and his storage.
-     * management of oracle and events
+     * the use of oracle and events
 
     * tools and environment :
      * remix ide
@@ -55,7 +55,7 @@
   * get some testnet eth : https://faucet.metamask.io/
 
   ### For users :
-  in the directory of the dapp open a console and run : `python -m http.server`<br/
+  in the directory of the dapp open a console and run : `python -m http.server`<br/>
   in your browser : http://127.0.0.1:8000/
 
   ### For development :
@@ -68,8 +68,8 @@
 
   **local network**  | **ropsten**
   ------------------------------------|------------------------------------
-  download & launch :[ganache](https://www.trufflesuite.com/ganache) then => contracts => add the truffle-config.js and save |  go to : [infura](https://infura.io/), to create a project and get a key<br/>copy/paste this key in truffle-config.js in the variable infurakey and in the ropsten url
-  run : `migrate --reset` | run : `npm @truffle/hdwallet-provider` and =>copy the seed of your metamask wallet in a file ".secret"
+  download & launch [ganache](https://www.trufflesuite.com/ganache) then => contracts => add the truffle-config.js and save |  go to [infura](https://infura.io/), to create a project and get a key<br/>copy/paste this key in truffle-config.js in the variable infurakey and in the ropsten url
+  run : `migrate --reset` | run : `npm @truffle/hdwallet-provider` then copy the seed of your metamask wallet in a ".secret" file
   =>copy/paste the proxy address in the variable addContract in the main.js
   =>import the accounts private keys from ganache in metamask (account[0] is the owner of the contract)  | run `migrate --reset --network ropsten`
 
@@ -79,7 +79,7 @@
   and play!
 
   #### to upgrade the contract :
-  * 2_deploy_Coinflip.js : find the part "upgrade" and recopy the same process with the new contract
+  * 2_deploy_Coinflip.js : find the part "upgrade" and recopy the same process by replacing CoinflipMainV2 with the new contract
   * deploy with `migrate --reset`(`--network ropsten`, according to the network used)
   * copy/paste the abi of the new contract from build directory to abi.js
   * copy the address of proxy from the console to the variable addContract in main.js

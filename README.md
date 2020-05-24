@@ -1,7 +1,7 @@
 # CoinflipDapp
 
  ## Theme
-  a betting dapp on ethereum.
+  a betting dapp on ethereum upgradeable and using an oracle.
   This dapp is for educational purpose so don't use it on the mainnet.
 
  ## The rules
@@ -55,7 +55,8 @@
   * get some testnet eth : https://faucet.metamask.io/
 
   ### For users :
-  in the directory of the dapp open a console and run : `python -m http.server` / in your browser : http://127.0.0.1:8000/
+  in the directory of the dapp open a console and run : `python -m http.server`<br/
+  in your browser : http://127.0.0.1:8000/
 
   ### For development :
   #### Prerequisites :
@@ -67,21 +68,22 @@
 
   **local network**  | **ropsten**
   ------------------------------------|------------------------------------
-  download :[ganache](https://www.trufflesuite.com/ganache) & launch ganache then : => contracts => add the truffle-config.js and save |  go to : [infura](https://infura.io/), create a project and get a key<br/>copy/paste this key in truffle-config.js in the variable infuraKey and in the ropsten url 
+  download & launch :[ganache](https://www.trufflesuite.com/ganache) then => contracts => add the truffle-config.js and save |  go to : [infura](https://infura.io/), to create a project and get a key<br/>copy/paste this key in truffle-config.js in the variable infurakey and in the ropsten url
   run : `migrate --reset` | run : `npm @truffle/hdwallet-provider` and =>copy the seed of your metamask wallet in a file ".secret"
-  =>note the address of the proxy contract and put it in the variable addContract in the main.js
+  =>copy/paste the proxy address in the variable addContract in the main.js
   =>import the accounts private keys from ganache in metamask (account[0] is the owner of the contract)  | run `migrate --reset --network ropsten`
 
-  run : `python -m http.server` (your local web server) / access your dapp in the browser at : http://127.0.0.1:8000/
+  run : `python -m http.server` (your local web server)<br/>
+  access your dapp in the browser at : http://127.0.0.1:8000/
 
   and play!
 
   #### to upgrade the contract :
-  * 2_deploy_Coinflip.js : find the part "upgrade" and recopy the same process with the new
-  * contract then deploy with `migrate --reset`(according to the network used)
+  * 2_deploy_Coinflip.js : find the part "upgrade" and recopy the same process with the new contract
+  * deploy with `migrate --reset`(`--network ropsten`, according to the network used)
   * copy/paste the abi of the new contract from build directory to abi.js
-  * copy the address of proxy from ganache to the variable addContract in main.js
-  * and launch the python server
+  * copy the address of proxy from the console to the variable addContract in main.js
+  * launch the python server
 
   ### troubleshooting :
    * on windows for the powershell you need to modify the security to allow scripts :

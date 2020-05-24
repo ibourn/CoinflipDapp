@@ -59,25 +59,25 @@
 
   ### For development :
   #### Prerequisites :
-  install : [nodejs](https://nodejs.org/en/)
-  via the powershell go in the dapp directory : `cd C:\xxxx\CoinflipDapp (windows)`
-  run : `npm install truffle -g`
-  in metamask specify a new port for ganache : 7545 or select the network ropsten
-  in the dapp directory run : `compil --all`
+  install : [nodejs](https://nodejs.org/en/)<br/>
+  via the powershell go in the dapp directory : `cd C:\xxxx\CoinflipDapp` (windows)<br/>
+  run : `npm install truffle -g`<br/>
+  in metamask specify a new port for ganache : 7545 or select the network ropsten<br/>
+  in the dapp directory run : `compil --all`<br/>
 
   **local network**  | **ropsten**
   ------------------------------------|------------------------------------
-  download :[ganache](https://www.trufflesuite.com/ganache) & launch ganache then : => contracts => add the truffle-config.js and save |  run : `npm @truffle/hdwallet-provider` and =>copy the seed of your metamask wallet in a file ".secret"
-  run : `migrate --reset` | run `migrate --reset --network ropsten`
+  download :[ganache](https://www.trufflesuite.com/ganache) & launch ganache then : => contracts => add the truffle-config.js and save |  go to : [infura](https://infura.io/), create a project and get a key<br/>copy/paste this key in truffle-config.js in the variable infuraKey and in the ropsten url 
+  run : `migrate --reset` | run : `npm @truffle/hdwallet-provider` and =>copy the seed of your metamask wallet in a file ".secret"
   =>note the address of the proxy contract and put it in the variable addContract in the main.js
-  =>import the accounts private keys from ganache in metamask (account[0] is the owner of the contract)  
+  =>import the accounts private keys from ganache in metamask (account[0] is the owner of the contract)  | run `migrate --reset --network ropsten`
 
   run : `python -m http.server` (your local web server) / access your dapp in the browser at : http://127.0.0.1:8000/
 
   and play!
 
   #### to upgrade the contract :
-  * in the 2_deploy_Coinflip.js file find the part "upgrade" and recopy the same process with the new
+  * 2_deploy_Coinflip.js : find the part "upgrade" and recopy the same process with the new
   * contract then deploy with `migrate --reset`(according to the network used)
   * copy/paste the abi of the new contract from build directory to abi.js
   * copy the address of proxy from ganache to the variable addContract in main.js

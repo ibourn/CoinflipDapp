@@ -49,22 +49,23 @@
        2 repo instead of a branch)
 
  ## Getting Started
+  #### Prerequisites :
   first get a wallet and some fake eth :
   * install : [Metamask](https://metamask.io/) - your ethereum wallet
   * choose the ropsten network
   * get some testnet eth : https://faucet.metamask.io/
+  * via the powershell go in the dapp directory : `cd C:\xxxx\CoinflipDapp` (windows)
 
   ### For users :
-  in the directory of the dapp open a console and run : `python -m http.server`<br/>
-  in your browser : http://127.0.0.1:8000/
+  * in the directory of the dapp open a console and run : `python -m http.server`<br/>
+  * in your browser : http://127.0.0.1:8000/
 
   ### For development :
   #### Prerequisites :
-  install : [nodejs](https://nodejs.org/en/)<br/>
-  via the powershell go in the dapp directory : `cd C:\xxxx\CoinflipDapp` (windows)<br/>
-  run : `npm install truffle -g`<br/>
-  in metamask specify a new port for ganache : 7545 or select the network ropsten<br/>
-  in the dapp directory run : `compil --all`<br/>
+  * install : [nodejs](https://nodejs.org/en/)<br/>
+  * run : `npm install truffle -g`<br/>
+  * in metamask specify a new port for ganache : 7545 or select the network ropsten<br/>
+  * in the dapp directory run : `compil --all`<br/>
 
   **local network**  | **ropsten**
   ------------------------------------|------------------------------------
@@ -73,8 +74,8 @@
   =>copy/paste the proxy address in the variable addContract in the main.js
   =>import the accounts private keys from ganache in metamask (account[0] is the owner of the contract)  | run `migrate --reset --network ropsten`
 
-  run : `python -m http.server` (your local web server)<br/>
-  access your dapp in the browser at : http://127.0.0.1:8000/
+  * run : `python -m http.server` (your local web server)<br/>
+  * access your dapp in the browser at : http://127.0.0.1:8000/
 
   and play!
 

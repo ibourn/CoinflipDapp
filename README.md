@@ -111,4 +111,4 @@
   * **ibourn** - *Initial work*
 
  ## License
-  none
+  MIT

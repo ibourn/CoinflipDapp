@@ -16,7 +16,7 @@
   "author": "ibourn",
   "license": "ISC",
   "dependencies": {
-    "@truffle/hdwallet-provider": "^1.0.35",
+    "@truffle/hdwallet-provider": "^1.7.0",
     "truffle": "^5.1.26"
   }
 }
